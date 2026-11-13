@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f5f9f8" />
+  <title>FlashPractice – Luyện dịch tiếng Anh miễn phí</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="FlashPractice trang chủ">
+      <span class="brand-mark">F</span><span>FlashPractice</span>
+    </a>
+    <nav class="topnav">
+      <button class="nav-link active" data-view="home">Lộ trình</button>
+      <button class="nav-link" data-view="review">Bài đã làm</button>
+    </nav>
+    <div class="header-right">
+      <span class="local-badge"><i></i> AI chạy trên thiết bị</span>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section id="homeView" class="view">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">YOUR DAILY ENGLISH PRACTICE</div>
+          <h1>Luyện dịch mỗi ngày</h1>
+          <p class="hero-sub">Tự dịch câu tiếng Việt, nhận góp ý về ý nghĩa, ngữ pháp và cách diễn đạt.</p>
+        </div>
+        <div class="overall-card">
+          <div class="overall-top"><span>Tiến độ tổng</span><strong id="overallFraction">0 / 150</strong></div>
+          <div class="progress"><span id="overallProgress"></span></div>
+          <div class="overall-foot"><span id="topicDoneText">0/5 chủ đề hoàn thành</span><span id="overallPercent">0%</span></div>
+        </div>
+      </div>
+
+      <div class="section-heading"><div><span class="eyebrow">ROADMAP</span><h2>5 chủ đề luyện tập</h2></div><span class="muted small">150 câu · A2–B1</span></div>
+      <div class="topic-grid" id="topicGrid"></div>
+
+      <div class="info-strip">
+        <div class="info-icon">✳</div>
+        <div><strong>Chấm bài không cần API trả phí</strong><p>Mô hình AI mã nguồn mở được tải một lần và chạy ngay trong Chrome. Bản dịch của bạn không cần gửi lên máy chủ chấm bài.</p></div>
+      </div>
+    </section>
+
+    <section id="topicView" class="view hidden">
+      <button class="back-link" data-go="home">← Quay lại lộ trình</button>
+      <div class="topic-header-card" id="topicHeader"></div>
+      <div class="list-heading"><div><span class="eyebrow">QUESTION LIST</span><h2>Danh sách câu hỏi</h2></div><div class="filter-row"><button class="filter active" data-filter="all">Tất cả</button><button class="filter" data-filter="todo">Chưa làm</button><button class="filter" data-filter="done">Đã chấm</button></div></div>
+      <div class="question-list" id="questionList"></div>
+    </section>
+
+    <section id="practiceView" class="view hidden">
+      <div class="practice-topline">
+        <button class="back-link" id="backToTopic">← Danh sách câu</button>
+        <div class="practice-topic" id="practiceTopic"></div>
+      </div>
+      <div class="practice-card">
+        <div class="practice-head">
+          <div><div class="eyebrow">DỊCH CÂU SAU SANG TIẾNG ANH</div><h2 id="questionCounter">Câu 01 / 30</h2></div>
+          <span class="level-pill" id="levelPill">Cơ bản · A2</span>
+        </div>
+        <div class="question-progress"><span id="questionProgress"></span></div>
+        <div class="prompt-box">
+          <span class="prompt-label">CÂU TIẾNG VIỆT</span>
+          <p id="promptText"></p>
+        </div>
+        <label class="answer-label" for="answerInput">Bản dịch tiếng Anh của bạn</label>
+        <textarea id="answerInput" rows="4" placeholder="Write your English translation here..."></textarea>
+        <div class="answer-meta"><span id="wordCount">0 từ</span><span id="gradeState" class="grade-state">Chưa chấm</span></div>
+        <div id="modelNotice" class="model-notice">
+          <div class="model-notice-icon">AI</div>
+          <div class="model-notice-copy"><strong>Chưa tải mô hình chấm bài</strong><p>Nhấn “Tải AI & chấm câu” để tải mô hình Qwen2.5-1.5B (~1,6 GB) vào Chrome. Lần đầu cần Internet; các lần sau dùng bộ nhớ đệm của trình duyệt.</p></div>
+        </div>
+        <div class="button-row">
+          <button class="btn btn-quiet" id="prevQuestion">← Câu trước</button>
+          <button class="btn btn-primary" id="gradeButton">✦ Tải AI & chấm câu</button>
+          <button class="btn btn-quiet" id="nextQuestion">Câu tiếp theo →</button>
+        </div>
+        <div id="loadingPanel" class="loading-panel hidden">
+          <div class="loading-line"><span class="spinner"></span><strong id="loadingTitle">Đang chuẩn bị mô hình AI…</strong></div>
+          <div class="progress"><span id="modelProgress"></span></div>
+          <p id="loadingDetail">Lần đầu tải có thể mất một lúc. Không đóng tab trong khi tải mô hình.</p>
+        </div>
+        <div id="gradePanel" class="grade-panel hidden"></div>
+        <div class="question-jump-wrap"><div class="jump-title"><strong>Đi đến câu</strong><span id="jumpAnswered">0/30 đã chấm</span></div><div id="questionJump" class="question-jump"></div></div>
+      </div>
+    </section>
+
+    <section id="reviewView" class="view hidden">
+      <div class="section-heading"><div><span class="eyebrow">YOUR WORK</span><h1 class="review-title">Bài làm của bạn</h1><p class="hero-sub">Xem lại bản dịch, điểm và nhận xét đã lưu trên Chrome này.</p></div><div class="review-actions"><button class="btn btn-outline" id="exportCsv">↓ Xuất CSV</button><button class="btn btn-outline" id="printReview">In / Lưu PDF</button></div></div>
+      <div class="review-summary" id="reviewSummary"></div>
+      <div id="reviewList" class="review-list"></div>
+    </section>
+  </main>
+
+  <footer class="footer"><span>FlashPractice · Học tiếng Anh từng câu một</span><span>Không cần API key · Không phí chấm theo lượt</span></footer>
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="topics.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
